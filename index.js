@@ -18,7 +18,6 @@ app.post('/register', bodyParser.json(), function (req, res) {
     msg: 'Register Successful',
   })
 })
-
 app.post('/login', bodyParser.json(), function (req, res) {
   console.log(req.body)
   if (!users[req.body.email]
@@ -28,6 +27,23 @@ app.post('/login', bodyParser.json(), function (req, res) {
   res.send({
     ok: true,
     msg: 'เข้าสู่ระบบเรียบร้อย',
+  })
+})
+app.get('/students/:num?', (req, res) => {
+  console.log(req.params)
+  let num = parseInt(req.params.num || 10)
+  num = Math.max(1, Math.min(100, isNaN(num) ? 10 : num))
+  let students = []
+  for (let i = 0; i < num; i++) {
+    students.push({
+      code: ('000' + (i + 1)).substr(-4),
+      name: 'Student' + (i + 1),
+      gpa: parseFloat(Math.min(4, Math.max(1.5, Math.random() * 4.5)).toFixed(2))
+    })
+  }
+  res.send({
+    ok: true,
+    students,
   })
 })
 app.listen(3000, function () {
