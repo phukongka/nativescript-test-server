@@ -1,0 +1,38 @@
+loginPage
+  [Login] => http://192.168.101.50:3000/login
+    ok = true   => listPage
+    ok = false  => alert
+  [Register] => registerPage
+
+registerPage
+  [Signup] => http://192.168.101.50:3000/register
+    ok = true  => loginPage
+    ok = false => alert
+
+listPage
+
+url: http://192.168.x.y:3000/register
+method: POST
+format: application/json
+{
+  "email": "email@mail.com",
+  "pass": "12345"
+}
+
+response
+--------
+application/json
+{
+  ok: true/false,
+  msg: '',
+}
+
+
+
+
+
+
+
+
+
+
