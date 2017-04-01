@@ -1,6 +1,8 @@
 var express = require('express')
 var app = express()
 var bodyParser = require('body-parser')
+const path = require('path')
+const fs = require('fs')
 
 var users = {}
 app.get('/', function (req, res) {
@@ -46,6 +48,17 @@ app.get('/students/:num?', (req, res) => {
     students,
   })
 })
+
+app.post('/upload', (req, res) => {
+  req.pipe(fs.createWriteStream(path.resolve('./public', req.headers['x-code'] + ".jpg"), {
+    flags: 'w',
+    encoding: null,
+    fd: null,
+    mode: 0666
+  }))
+  res.send({status: true})
+})
+
 app.listen(3000, function () {
   console.log('Example app listening on port 3000!')
 })
