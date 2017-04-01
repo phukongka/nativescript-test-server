@@ -58,8 +58,10 @@ app.post('/upload', (req, res) => {
     encoding: null,
     fd: null,
     mode: 0666
-  }))
-  res.send({status: true})
+  })).on('end', () => {
+    console.log('upload done', req.headers['x-code'])
+    res.send({status: true})
+  })
 })
 
 app.listen(3000, function () {
